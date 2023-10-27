@@ -1,0 +1,8 @@
+Flask==2.2.5
+flask-marshmallow==0.15.0
+Flask-Migrate==4.0.4
+numpy==1.24.0
+pydantic==2.3.0
+pydantic-core==2.6.3
+pydantic-settings==2.0.3
+transformers==4.34.0
