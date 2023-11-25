@@ -30,7 +30,7 @@ Ensure you have the pre-requisites in place:
 
 1. Clone this repository: 
    ```
-   git clone https://github.com/NVIDIA/<TODO:repo>
+   https://github.com/NVIDIA/trt-llm-as-openai-windows
    cd <repo>
    ```
 2. Download the tokenizer and config.json from HuggingFace and place them in the model/ directory.
