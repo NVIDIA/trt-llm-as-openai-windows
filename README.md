@@ -81,7 +81,7 @@ Arguments
 * /v1/completions
 * /v1/chat/completions
 
-<h3 id="use-cases">Use cases</h3>
+<h3 id="use-cases">Examples</h3>
 <h4 id="continue.dev">[Visual Studio Code](https://code.visualstudio.com) Extension [Continue.dev](https://continue.dev/)</h4>
 
 1. Run this app with CodeLlama2-13B-instruct AWQ int4 model as described above.
