@@ -69,7 +69,7 @@ Ensure you have the pre-requisites in place:
 2. Run the following code inside your Python env.
    
 3. Set a random API key and the base URL.
-   ```
+```
   openai.api_key="ABC"  
   openai.api_base="http://127.0.0.1:8081"
   response = openai.ChatCompletion.create(
@@ -77,7 +77,7 @@ Ensure you have the pre-requisites in place:
     messages = [{"role": "user", "content": "Hello!"}]
   )
   print(response)
-   ```
+```
    
 
 ## Detailed Command References 
