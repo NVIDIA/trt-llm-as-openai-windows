@@ -81,8 +81,8 @@ Arguments
 * /v1/completions
 * /v1/chat/completions
 
-<h3 id="use-cases">Examples</h3>
-<h4 id="continue.dev">[Visual Studio Code](https://code.visualstudio.com) Extension [Continue.dev](https://continue.dev/)</h4>
+<h2 id="use-cases">Examples</h3>
+## [Continue.dev](https://continue.dev/) [Visual Studio Code](https://code.visualstudio.com) Extension with CodeLlama-13B##
 
 1. Run this app with CodeLlama2-13B-instruct AWQ int4 model as described above.
 2. Install Continue.dev from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue)
