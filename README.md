@@ -31,7 +31,7 @@ Ensure you have the pre-requisites in place:
 1. Clone this repository: 
    ```
    https://github.com/NVIDIA/trt-llm-as-openai-windows
-   cd <repo>
+   cd trt-llm-as-openai-windows
    ```
 2. Download the tokenizer and config.json from HuggingFace and place them in the model/ directory.
    - [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf/tree/main).
@@ -82,7 +82,7 @@ Arguments
 * /v1/chat/completions
 
 <h2 id="use-cases">Examples</h3>
-## [Continue.dev](https://continue.dev/) [Visual Studio Code](https://code.visualstudio.com) Extension with CodeLlama-13B##
+## [Continue.dev](https://continue.dev) [Visual Studio Code](https://code.visualstudio.com) Extension with CodeLlama-13B##
 
 1. Run this app with CodeLlama2-13B-instruct AWQ int4 model as described above.
 2. Install Continue.dev from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue)
