@@ -37,7 +37,7 @@ Ensure you have the pre-requisites in place:
    - [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf/tree/main).
    - [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf/tree/main)
 3. Place the TensorRT engine & config.json (from NGC) for the Llama/CodeLlama model in the 'model/engine' directory
-   - For GeForce RTX 4090 users: Download the pre-built TRT engine [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2) and place it in the model/ directory.
+   - For GeForce RTX 4090 users: Download the pre-built TRT engine and config.json for [Llama2-13B](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2) or [CodeLlama-13B](update NGC link) and place it in the model/engine directory.
    - For other NVIDIA GPU users: Build the TRT engine by following the instructions provided [here](#building-trt-engine).
 4. Install the necessary libraries: 
    ```
@@ -50,11 +50,11 @@ Ensure you have the pre-requisites in place:
    python app.py --trt_engine_path <TRT Engine folder> --trt_engine_name <TRT Engine file>.engine --tokenizer_dir_path <tokernizer folder> --port <optional port>
    ```
    
-   - CodeLlaMa-2-13B-chat model needs below additional commands
+   - CodeLlaMa-13B-chat model needs below additional commands
    ```
    --max_output_tokens 8192 --max_input_tokens 8192 --no_system_prompt True
    ```
-   In our case, that will be:
+   In our case, that will be (for Llama-2):
    ```
    python app.py --trt_engine_path model/engine/ --trt_engine_name llama_float16_tp1_rank0.engine --tokenizer_dir_path model/ --port 8081
    ```
