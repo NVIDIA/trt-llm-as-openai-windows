@@ -59,6 +59,27 @@ Ensure you have the pre-requisites in place:
    python app.py --trt_engine_path model/engine/ --trt_engine_name llama_float16_tp1_rank0.engine --tokenizer_dir_path model/ --port 8081
    ```
 
+### Test the API
+
+1. Install the 'openai' client library in your Python environment.
+   ```
+   pip install openai
+   ```
+  
+2. Run the following code inside your Python env.
+   
+3. Set a random API key and the base URL.
+   ```
+  openai.api_key="ABC"  
+  openai.api_base="http://127.0.0.1:8081"
+  response = openai.ChatCompletion.create(
+    model = "Llama2", ##change to CodeLlama if necessary
+    messages = [{"role": "user", "content": "Hello!"}]
+  )
+  print(response)
+   ```
+   
+
 ## Detailed Command References 
 ```
 python app.py --trt_engine_path <TRT Engine folder> --trt_engine_name <TRT Engine file>.engine --tokenizer_dir_path <tokernizer folder> --port <port>
