@@ -70,13 +70,13 @@ Ensure you have the pre-requisites in place:
    
 3. Set a random API key and the base URL.
 ```
-  openai.api_key="ABC"  
-  openai.api_base="http://127.0.0.1:8081"
-  response = openai.ChatCompletion.create(
-    model = "Llama2", ##change to CodeLlama if necessary
-    messages = [{"role": "user", "content": "Hello!"}]
+openai.api_key="ABC"  
+openai.api_base="http://127.0.0.1:8081"
+response = openai.ChatCompletion.create(
+  model = "Llama2", ##change to CodeLlama if necessary
+  messages = [{"role": "user", "content": "Hello!"}]
   )
-  print(response)
+print(response)
 ```
    
 
