@@ -52,7 +52,7 @@ Ensure you have the pre-requisites in place:
    
    - CodeLlaMa-13B-chat model needs below additional commands
    ```
-   --max_output_tokens 8192 --max_input_tokens 8192 --no_system_prompt True
+   --max_output_tokens 4096 --max_input_tokens 1024 --no_system_prompt True
    ```
    In our case, that will be (for Llama-2):
    ```
