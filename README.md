@@ -73,7 +73,7 @@ Ensure you have the pre-requisites in place:
 openai.api_key="ABC"  
 openai.api_base="http://127.0.0.1:8081"
 response = openai.ChatCompletion.create(
-  model = "Llama2", ##change to CodeLlama if necessary
+  model = "Llama2",
   messages = [{"role": "user", "content": "Hello!"}]
   )
 print(response)
