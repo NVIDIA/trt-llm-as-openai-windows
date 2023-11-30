@@ -103,9 +103,9 @@ Arguments
 * /v1/chat/completions
 
 <h2 id="use-cases">Examples</h3>
-<h3> [Continue.dev](https://continue.dev) [Visual Studio Code](https://code.visualstudio.com) Extension with CodeLlama-13B </h3>
+<h3> <a href="https://continue.dev">Continue.dev</a> Visual Studio Code Extension with CodeLlama-13B </h3>
 
-1. Run this app with CodeLlama2-13B-instruct AWQ int4 model as described above.
+1. Run this app with CodeLlama-13B-instruct AWQ int4 model as described above.
 2. Install Continue.dev from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue)
 3. Configure to use OpenAI API compatible local inference from UI
    1. Open Continue.dev plugin from Visual Studio Code left panel
