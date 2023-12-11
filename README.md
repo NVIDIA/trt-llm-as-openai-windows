@@ -93,6 +93,9 @@ Arguments
 | --trt_engine_name <>    | Engine file name (e.g. llama_float16_tp1_rank0.engine)                                                                                                      |
 | --tokenizer_dir_path <> | HF downloaded model files for tokenizer & config.json e.g. [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) or [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf/tree/main) |
 | --port <>               | OpenAI compatible server hosted on localhost and 8081 port as default. Optionally, allows to specify a different port.  |
+| --max_output_tokens     | Optional override to maximum output token sizes otherwise it defaults to 2048 |
+| --max_input_tokens      | Optional override to maximum input token sizes otherwise it defaults to 2048 |
+| --no_system_prompt      | App uses default system prompt and optionally supported to avoid it. | 
 
 
 <h3 id="supported-apis">Supported APIs</h3>
