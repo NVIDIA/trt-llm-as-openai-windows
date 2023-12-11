@@ -2,7 +2,7 @@
 
 Drop-in replacement REST API compatible with OpenAI API spec using TensorRT-LLM as the inference backend.
 
-Setup a local Llama 2 or Code Llama web server using TRT-LLM for compatibility with the OpenAI Chat and legacy Completions API. (add links) This enables accelerated inference on Windows natively, while retaining compatibility with the wide array of projects built using the OpenAI API.
+Setup a local Llama 2 or Code Llama web server using TRT-LLM for compatibility with the OpenAI Chat and legacy Completions API. This enables accelerated inference on Windows natively, while retaining compatibility with the wide array of projects built using the OpenAI API.
 
 Follow this README to setup your own web server for Llama 2 and Code Llama.
 
@@ -10,20 +10,20 @@ Follow this README to setup your own web server for Llama 2 and Code Llama.
 
 Ensure you have the pre-requisites in place:
 
-1. Install [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM/) for Windows using the instructions [here](https://github.com/NVIDIA/TensorRT-LLM/blob/release/0.5.0/windows/README.md).
+1. Install [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM/) for Windows using the instructions [here](https://github.com/NVIDIA/TensorRT-LLM/tree/v0.6.1/windows#quick-start).
 
 2. Ensure you have access to the Llama 2 repository on Huggingface
    * [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
    * [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
 
-3. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLaMa 2 13B or CodeLlama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. For users with the GeForce RTX 4090, combined with TensorRT 9.1.0.4 and TensorRT-LLM release 0.5.0, the pre-compiled TRT Engines are available for download through the provided links below. If utilizing a different NVIDIA GPU or another version of TensorRT, refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
+3. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLaMa 2 13B or CodeLlama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. For users with the GeForce RTX 4090, combined with TensorRT-LLM release v0.6.1, the pre-compiled TRT Engines are available for download through the provided links below. If utilizing a different NVIDIA GPU or another version of TensorRT, refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
 
    #### Prebuilt TRT Engine
 
-   | # |  Model                | RTX GPU   | TensorRT Engine <br/>(TRT 9.1.0.4 & <br/> TRT-LLM 0.5.0)|  
+   | # |  Model                | RTX GPU   | TensorRT Engine <br/>(TRT-LLM 0.6.1)|  
    |---|----------------------------------|---------|---------------------------------------|
    | 1 | Llama2-13b-chat AWQ int4         | RTX 4090 | [Download](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2) |
-   | 2 | CodeLlama2-13b-instruct AWQ int4 | RTX 4090 |  TODO: <br/> ```\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k\eng```       |
+   | 2 | CodeLlama-13b-instruct AWQ int4 | RTX 4090 |  TODO: <br/> ```\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k\eng```       |
 
 
 <h3 id="setup"> Setup Steps </h3>
@@ -50,7 +50,7 @@ Ensure you have the pre-requisites in place:
    python app.py --trt_engine_path <TRT Engine folder> --trt_engine_name <TRT Engine file>.engine --tokenizer_dir_path <tokernizer folder> --port <optional port>
    ```
    
-   - CodeLlaMa-13B-chat model needs below additional commands
+   - CodeLlaMa-13B-instruct model needs below additional commands
    ```
    --max_output_tokens 4096 --max_input_tokens 2048 --no_system_prompt True
    ```
@@ -139,15 +139,15 @@ Arguments
 
 <h3 id="building-trt-engine">Building TRT Engine</h3>
 
-For RTX 4090 (TensorRT 9.1.0.4 & TensorRT-LLM 0.5.0), a prebuilt TRT engine is provided. For other RTX GPUs or TensorRT versions, follow these steps to build your TRT engine:
+For RTX 4090 (TensorRT-LLM v0.6.1), a prebuilt TRT engine is provided. For other RTX GPUs or TensorRT versions, follow these steps to build your TRT engine:
 
 Download models and quantized weights
   * Llama-2-13b-chat AWQ int4 
     * Download Llama-2-13b-chat model from [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
-    * Download Llama-2-13b-chat AWQ int4 checkpoints **model.pt** from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2)
+    * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2)
   * CodeLlama-13B-instruct AWQ int
     * Download CodeLLaMa-2 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
-    * Download CodeLLaMa 2 13B AWQ int4 checkpoints **model.pt** from [\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k]
+    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k]
 
 
 Clone the [TensorRT LLM](https://github.com/NVIDIA/TensorRT-LLM/) repository:
