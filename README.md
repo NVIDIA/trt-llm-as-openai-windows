@@ -13,18 +13,36 @@ Ensure you have the pre-requisites in place:
 1. Install [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM/) for Windows using the instructions [here](https://github.com/NVIDIA/TensorRT-LLM/tree/v0.6.1/windows#quick-start).
 
 2. Ensure you have access to the Llama 2 repository on Huggingface
-   * [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
    * [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
+   * [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
 
-3. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLaMa 2 13B or CodeLlama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. For users with the GeForce RTX 4090, combined with TensorRT-LLM release v0.6.1, the pre-compiled TRT Engines are available for download through the provided links below. If utilizing a different NVIDIA GPU or another version of TensorRT, refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
+4. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLaMa 2 13B or CodeLlama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. Refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
 
-   #### Prebuilt TRT Engine
+<h3 id="building-trt-engine">Building TRT Engine</h3>
 
-   | # |  Model                | RTX GPU   | TensorRT Engine <br/>(TRT-LLM 0.6.1)|  
-   |---|----------------------------------|---------|---------------------------------------|
-   | 1 | Llama2-13b-chat AWQ int4         | RTX 4090 | [Download](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2) |
-   | 2 | CodeLlama-13b-instruct AWQ int4 | RTX 4090 |  TODO: <br/> ```\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k\eng```       |
+Follow these steps to build your TRT engine:
 
+Download models and quantized weights
+  * CodeLlama-13B-instruct AWQ int
+    * Download CodeLLaMa-2 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
+    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k]
+  * Llama-2-13b-chat AWQ int4 
+    * Download Llama-2-13b-chat model from [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
+    * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2)
+
+Clone the [TensorRT LLM](https://github.com/NVIDIA/TensorRT-LLM/) repository:
+```
+git clone https://github.com/NVIDIA/TensorRT-LLM.git
+```
+
+For CodeLlama engine, navigate to the examples\llama directory and run the following script:
+```
+python build.py --model_dir <path to CodeLlama model> --quant_ckpt_path <path to CodeLlama .npz file> --dtype float16 --remove_input_padding --use_gpt_attention_plugin float16 --enable_context_fmha --use_gemm_plugin float16 --use_weight_only --weight_only_precision int4_awq --per_group --max_batch_size 1 --max_input_len 15360 --max_output_len 1024 --output_dir <TRT engine folder> --rotary_base 1000000 --vocab_size 32064
+```
+For Llama2 engine, navigate to the examples\llama directory and run the following script:
+```
+python build.py --model_dir <path to llama13_chat model> --quant_ckpt_path <path to Llama2 .npz file> --dtype float16 --use_gpt_attention_plugin float16 --use_gemm_plugin float16 --use_weight_only --weight_only_precision int4_awq --per_group --enable_context_fmha --max_batch_size 1 --max_input_len 3500 --max_output_len 1024 --output_dir <TRT engine folder>
+```
 
 <h3 id="setup"> Setup Steps </h3>
 
@@ -34,11 +52,9 @@ Ensure you have the pre-requisites in place:
    cd trt-llm-as-openai-windows
    ```
 2. Download the tokenizer and config.json from HuggingFace and place them in the model/ directory.
-   - [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf/tree/main).
    - [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf/tree/main)
-3. Place the TensorRT engine & config.json (from NGC) for the Llama/CodeLlama model in the 'model/engine' directory
-   - For GeForce RTX 4090 users: Download the pre-built TRT engine and config.json for [Llama2-13B](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2) or [CodeLlama-13B](update NGC link) and place it in the model/ directory.
-   - For other NVIDIA GPU users: Build the TRT engine by following the instructions provided [here](#building-trt-engine).
+   - [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf/tree/main).
+3. Build the TRT engine by following the instructions provided [here](#building-trt-engine) and place the TensorRT engine & config.json (from NGC) for the Llama/CodeLlama model in the 'model/engine' directory
 4. Install the necessary libraries: 
    ```
    pip install -r requirements.txt
@@ -50,20 +66,20 @@ Ensure you have the pre-requisites in place:
    python app.py --trt_engine_path <TRT Engine folder> --trt_engine_name <TRT Engine file>.engine --tokenizer_dir_path <tokernizer folder> --port <optional port>
    ```
    
-   - CodeLlaMa-13B-instruct model needs below additional commands
+   - CodeLlaMa-13B-instruct model needs additional parameter mentioned below to the command above :
    ```
-   --max_output_tokens 4096 --max_input_tokens 2048 --no_system_prompt True
+   --no_system_prompt True
    ```
-   In our case, that will be (for Llama-2):
+   In our case, that will be (for CodeLlama):
    ```
-   python app.py --trt_engine_path model/ --trt_engine_name llama_float16_tp1_rank0.engine --tokenizer_dir_path model/ --port 8081
+   python app.py --trt_engine_path model/ --trt_engine_name llama_float16_tp1_rank0.engine --tokenizer_dir_path model/ --port 8081 --no_system_prompt True
    ```
 
 ### Test the API
 
 1. Install the 'openai' client library in your Python environment.
    ```
-   pip install openai
+   pip install openai==0.28
    ```
   
 2. Run the following code inside your Python env.
@@ -74,8 +90,7 @@ openai.api_key="ABC"
 openai.api_base="http://127.0.0.1:8081"
 response = openai.ChatCompletion.create(
   model = "Llama2",
-  messages = [{"role": "user", "content": "Hello!"}]
-  )
+  prompt = "Hello! How are you?")
 print(response)
 </pre>
    
@@ -136,29 +151,5 @@ Arguments
                ),
       ...
       ```
-
-<h3 id="building-trt-engine">Building TRT Engine</h3>
-
-For RTX 4090 (TensorRT-LLM v0.6.1), a prebuilt TRT engine is provided. For other RTX GPUs or TensorRT versions, follow these steps to build your TRT engine:
-
-Download models and quantized weights
-  * Llama-2-13b-chat AWQ int4 
-    * Download Llama-2-13b-chat model from [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
-    * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2)
-  * CodeLlama-13B-instruct AWQ int
-    * Download CodeLLaMa-2 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
-    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k]
-
-
-Clone the [TensorRT LLM](https://github.com/NVIDIA/TensorRT-LLM/) repository:
-```
-git clone https://github.com/NVIDIA/TensorRT-LLM.git
-```
-
-Navigate to the examples\llama directory and run the following script:
-```
-python build.py --model_dir <path to llama13_chat model> --quant_ckpt_path <path to model.pt> --dtype float16 --use_gpt_attention_plugin float16 --use_gemm_plugin float16 --use_weight_only --weight_only_precision int4_awq --per_group --enable_context_fmha --max_batch_size 1 --max_input_len 3500 --max_output_len 1024 --output_dir <TRT engine folder>
-```
-
 
 This project requires additional third-party open source software projects as specified in the documentation. Review the license terms of these open source projects before use.
