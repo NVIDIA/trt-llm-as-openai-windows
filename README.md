@@ -16,7 +16,7 @@ Ensure you have the pre-requisites in place:
    * [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
    * [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
 
-4. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLaMa 2 13B or CodeLlama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. Refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
+4. In this repo, we provide instructions to set up an OpenAI API compatible server with either the LLama 2 13B or Code Llama 13B model, both optimized using AWQ 4-bit quantization. To begin, it's necessary to compile a TensorRT Engine tailored to your specific GPU. Refer to the given instructions for constructing your TRT Engine [instructions](#building-trt-engine).
 
 <h3 id="building-trt-engine">Building TRT Engine</h3>
 
@@ -24,8 +24,8 @@ Follow these steps to build your TRT engine:
 
 Download models and quantized weights
   * CodeLlama-13B-instruct AWQ int
-    * Download CodeLLaMa-2 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
-    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/code_llama/files?version=1.1)
+    * Download CodeLlama 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
+    * Download CodeLlama 13B AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/code_llama/files?version=1.1)
   * Llama-2-13b-chat AWQ int4 
     * Download Llama-2-13b-chat model from [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
     * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.3)
@@ -35,7 +35,7 @@ Clone the [TensorRT LLM](https://github.com/NVIDIA/TensorRT-LLM/) repository:
 git clone https://github.com/NVIDIA/TensorRT-LLM.git
 ```
 
-For CodeLlama engine, navigate to the examples\llama directory and run the following script:
+For Code Llama engine, navigate to the examples\llama directory and run the following script:
 ```
 python build.py --model_dir <path to CodeLlama model> --quant_ckpt_path <path to CodeLlama .npz file> --dtype float16 --remove_input_padding --use_gpt_attention_plugin float16 --enable_context_fmha --use_gemm_plugin float16 --use_weight_only --weight_only_precision int4_awq --per_group --max_batch_size 1 --max_input_len 15360 --max_output_len 1024 --output_dir <TRT engine folder> --rotary_base 1000000 --vocab_size 32064
 ```
@@ -61,12 +61,12 @@ python build.py --model_dir <path to llama13_chat model> --quant_ckpt_path <path
    ```
 5. Launch the application using the following command:
 
-   - LlaMa-2-13B-chat model
+   - Llama-2-13B-chat model
    ```
    python app.py --trt_engine_path <TRT Engine folder> --trt_engine_name <TRT Engine file>.engine --tokenizer_dir_path <tokernizer folder> --port <optional port>
    ```
    
-   - CodeLlaMa-13B-instruct model needs additional parameter mentioned below to the command above :
+   - CodeLlama-13B-instruct model needs additional parameter mentioned below to the command above :
    ```
    --no_system_prompt True
    ```
