@@ -54,7 +54,7 @@ python build.py --model_dir <path to llama13_chat model> --quant_ckpt_path <path
 2. Download the tokenizer and config.json from HuggingFace and place them in the model/ directory.
    - [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf/tree/main)
    - [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf/tree/main).
-3. Build the TRT engine by following the instructions provided [here](#building-trt-engine) and place the TensorRT engine & config.json (from NGC) for the Llama/CodeLlama model in the 'model/engine' directory
+3. Build the TRT engine by following the instructions provided [here](#building-trt-engine) and place the TensorRT engine files for the Llama2/CodeLlama model in the 'model/engine' directory
 4. Install the necessary libraries: 
    ```
    pip install -r requirements.txt
