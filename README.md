@@ -25,10 +25,10 @@ Follow these steps to build your TRT engine:
 Download models and quantized weights
   * CodeLlama-13B-instruct AWQ int
     * Download CodeLLaMa-2 13B model from [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)
-    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [\\nvsw-dump\users\aaka\winAi\code_llama_13b_instruct_ammo_awq_engine_16k]
+    * Download CodeLLaMa 2 13B AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/code_llama/files?version=1.1)
   * Llama-2-13b-chat AWQ int4 
     * Download Llama-2-13b-chat model from [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf)
-    * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.2)
+    * Download Llama-2-13b-chat AWQ int4 checkpoints from [here](https://catalog.ngc.nvidia.com/orgs/nvidia/models/llama2-13b/files?version=1.3)
 
 Clone the [TensorRT LLM](https://github.com/NVIDIA/TensorRT-LLM/) repository:
 ```
@@ -104,7 +104,7 @@ Arguments
 
 | Name                    | Details                     |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| --trt_engine_path <>    | Directory of TensorRT engine ([Prebuilt TRT Engine](#prebuilt-trt-engine) or locally built TRT engine [instructions](#building-trt-engine))                                                                                                                        |
+| --trt_engine_path <>    | Directory of TensorRT engine (built TRT engine using [instructions](#building-trt-engine))                                                                                                                        |
 | --trt_engine_name <>    | Engine file name (e.g. llama_float16_tp1_rank0.engine)                                                                                                      |
 | --tokenizer_dir_path <> | HF downloaded model files for tokenizer & config.json e.g. [Llama-2-13b-chat-hf](https://huggingface.co/meta-llama/Llama-2-13b-chat-hf) or [CodeLlama-13b-Instruct-hf](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf/tree/main) |
 | --port <>               | OpenAI compatible server hosted on localhost and 8081 port as default. Optionally, allows to specify a different port.  |
